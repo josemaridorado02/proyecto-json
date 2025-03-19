@@ -4,6 +4,20 @@ def listar_titulos(datos):
         print(f"Fecha de publicación: {articulo['publicadoEn']}")
         print(f"Etiquetas: {', '.join(articulo['etiquetas'])}\n")
 
+def listar_titulos_simples(datos):
+    """Muestra solo los títulos de los artículos disponibles."""
+    for articulo in datos["articulos"]:
+        print(f"- {articulo['titulo']}")
+
+def listar_autores(datos):
+    """Muestra la lista de autores únicos en orden alfabético."""
+    autores = set()
+    for articulo in datos["articulos"]:
+        autores.add(articulo["autor"]["nombre"])
+    
+    for autor in sorted(autores):
+        print(f"- {autor}")
+
 def total_articulos_por_categoria(datos):
     categorias = {}
     for articulo in datos["articulos"]:
@@ -17,21 +31,23 @@ def mostrar_companias(datos, titulo):
     for articulo in datos["articulos"]:
         if articulo["titulo"].lower() == titulo.lower():
             if "empresas" in articulo:
-                print("Compañías relacionadas:")
+                print("\nCompañías relacionadas:")
                 for empresa in articulo["empresas"]:
                     print(f"- {empresa['nombre']} ({empresa['industria']})")
             else:
-                print("No hay compañías relacionadas con este artículo.")
+                print("\nNo hay compañías relacionadas con este artículo.")
             return
-    print("Artículo no encontrado.")
+    print("\nArtículo no encontrado.")
 
 def buscar_por_autor(datos, autor):
+    encontrado = False
     for articulo in datos["articulos"]:
         if articulo["autor"]["nombre"].lower() == autor.lower():
-            print(f"Título: {articulo['titulo']}")
+            print(f"\nTítulo: {articulo['titulo']}")
             print(f"Fecha de publicación: {articulo['publicadoEn']}")
-            return
-    print("No se encontró ningún artículo de este autor.")
+            encontrado = True
+    if not encontrado:
+        print("\nNo se encontró ningún artículo de este autor.")
 
 def resumen_por_fuente(datos):
     fuentes = {}
@@ -42,7 +58,8 @@ def resumen_por_fuente(datos):
         fuentes[fuente].append(articulo["titulo"])
     
     for fuente, titulos in fuentes.items():
-        print(f"Fuente: {fuente}, Total de artículos: {len(titulos)}")
+        print(f"\nFuente: {fuente}, Total de artículos: {len(titulos)}")
         for titulo in titulos:
             print(f"- {titulo}")
         print()
+
