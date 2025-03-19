@@ -2,7 +2,7 @@ import json
 import funciones
 
 def cargar_datos():
-    with open("datos.json", "r", encoding="utf-8") as archivo:
+    with open("proyecto.json", "r", encoding="utf-8") as archivo:
         return json.load(archivo)
 
 datos = cargar_datos()
@@ -24,10 +24,14 @@ def menu():
         elif opcion == "2":
             funciones.total_articulos_por_categoria(datos)
         elif opcion == "3":
-            titulo = input("Introduce el título del artículo: ")
+            print("\nTítulos disponibles:")
+            funciones.listar_titulos_simples(datos)  # Muestra solo los títulos
+            titulo = input("\nIntroduce el título del artículo: ")
             funciones.mostrar_companias(datos, titulo)
         elif opcion == "4":
-            autor = input("Introduce el nombre del autor: ")
+            print("\nAutores disponibles:")
+            funciones.listar_autores(datos)  # Muestra la lista de autores únicos
+            autor = input("\nIntroduce el nombre del autor: ")
             funciones.buscar_por_autor(datos, autor)
         elif opcion == "5":
             funciones.resumen_por_fuente(datos)
@@ -37,3 +41,4 @@ def menu():
             print("Opción no válida, intenta de nuevo.")
 
 menu()
+
